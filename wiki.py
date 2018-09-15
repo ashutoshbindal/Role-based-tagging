@@ -1,8 +1,9 @@
 import wikipedia as wiki
 from bs4 import BeautifulSoup
 import requests
+import sys
 
-search = wiki.search("narendra modi")
+search = wiki.search(sys.argv[1])
 page = wiki.page(search[0])
 url = page.url
 url_name = url[::-1].split('/')[0]
