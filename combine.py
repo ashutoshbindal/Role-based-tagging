@@ -2,9 +2,9 @@ import os
 import csv
 import re
 
-F = open("query.cyp","w")
-with open("allpeople.csv","rb") as csvfile:
-	spamreader = csv.reader(csvfile, delimiter=' ', quotechar='|')
+F = open("query_new.cyp","w")
+with open("all_people_new.csv","rb") as csvfile:
+	spamreader = csv.reader(csvfile, delimiter='|', quotechar='|')
 	count = 0
 	for row in spamreader:
 		if count < 3:
@@ -14,11 +14,12 @@ with open("allpeople.csv","rb") as csvfile:
 			# print row
 			break
 		row_split = str(row).split('"')
+		# print row_split[0][3:]
 		# print row_split[1]
-		F.write("Match (:person {name:")
-		F.write('"')
-		F.write(row_split[1])
-		F.write('"')
+		F.write("Match (:person {uuid:")
+		# F.write('"')
+		F.write(row_split[0][3:])
+		# F.write('"')
 		F.write("})-->(connected) return connected.name;")
 		F.write("\n")
 		count = count + 1
