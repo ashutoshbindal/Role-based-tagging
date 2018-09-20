@@ -75,7 +75,7 @@ for i in range(len(keys)):
 		max_match = 0 
 		max_index = 0
 		for j in range(len(search)):
-			summary = wiki.summary(search[j])
+			summary = wiki.page(search[j]).content
 			temp_match = 0
 			for k in range(len(connected[keys[i]])):
 				if connected[keys[i]][k].lower() in summary.lower():
