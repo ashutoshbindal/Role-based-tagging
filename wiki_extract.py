@@ -62,43 +62,44 @@ with open('extract_wiki.tsv', 'a') as fin:
 count = 0
 
 keys = list(connected.keys())
-for i in range(len(keys)):
-	temp_key = int(keys[i])
-	person_name = person[temp_key]
-	# print(person_name)
-	# print(connected[keys[i]])
-	# print(connected[keys[i]][0])
+with open('extract_wiki.tsv', 'a') as fin:
+	for i in range(len(keys)):
+		temp_key = int(keys[i])
+		person_name = person[temp_key]
+		# print(person_name)
+		# print(connected[keys[i]])
+		# print(connected[keys[i]][0])
 
-	search = wiki.search(person_name)
-	if(len(search) != 0):
-		count += 1
-		max_match = 0 
-		max_index = 0
-		# flag = False
-		for j in range(len(search)):
+		search = wiki.search(person_name)
+		if(len(search) != 0):
+			count += 1
+			max_match = 0 
+			max_index = 0
 			# flag = False
-			try:	
-				summary = wiki.page(search[j]).content
-				temp_match = 0
-				for k in range(len(connected[keys[i]])):
-					if connected[keys[i]][k].lower() in summary.lower():
-						temp_match += 1
-				if(max_match < temp_match):
-					max_match = temp_match
-					max_index = j
-			except:
-				print("")
-		temp_row = str(temp_key) + '\t' + person_name + "\t" + search[max_index] + "\t" + str(max_match) + "\t" + str(len(connected[keys[i]])) + "\n"
-		print(temp_row)
-		with open('extract_wiki.tsv', 'a') as fin:
+			for j in range(len(search)):
+				# flag = False
+				try:	
+					summary = wiki.page(search[j]).content
+					temp_match = 0
+					for k in range(len(connected[keys[i]])):
+						if connected[keys[i]][k].lower() in summary.lower():
+							temp_match += 1
+					if(max_match < temp_match):
+						max_match = temp_match
+						max_index = j
+				except:
+					print("")
+			temp_row = str(temp_key) + '\t' + person_name + "\t" + search[max_index] + "\t" + str(max_match) + "\t" + str(len(connected[keys[i]])) + "\n"
+			print(temp_row)
+			
 			fin.write(temp_row)
-			# page = wiki.page(search[j])
-			# url = page.url
-			# url_name = url[::-1].split('/')[0]
-			# url_name = url_name[::-1]
-	
-	# print(count)
-	# break
+				# page = wiki.page(search[j])
+				# url = page.url
+				# url_name = url[::-1].split('/')[0]
+				# url_name = url_name[::-1]
+		
+		# print(count)
+		# break
 
 with open('extract_wiki.tsv', 'a') as fin:
 	fin.write('\n\n\n' + str(count) )
