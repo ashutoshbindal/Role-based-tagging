@@ -74,15 +74,20 @@ for i in range(len(keys)):
 		count += 1
 		max_match = 0 
 		max_index = 0
+		# flag = False
 		for j in range(len(search)):
-			summary = wiki.page(search[j]).content
-			temp_match = 0
-			for k in range(len(connected[keys[i]])):
-				if connected[keys[i]][k].lower() in summary.lower():
-					temp_match += 1
-			if(max_match < temp_match):
-				max_match = temp_match
-				max_index = j
+			# flag = False
+			try:	
+				summary = wiki.page(search[j]).content
+				temp_match = 0
+				for k in range(len(connected[keys[i]])):
+					if connected[keys[i]][k].lower() in summary.lower():
+						temp_match += 1
+				if(max_match < temp_match):
+					max_match = temp_match
+					max_index = j
+			except:
+				print("")
 		temp_row = str(temp_key) + '\t' + person_name + "\t" + search[max_index] + "\t" + str(max_match) + "\t" + str(len(connected[keys[i]])) + "\n"
 		print(temp_row)
 		with open('extract_wiki.tsv', 'a') as fin:
